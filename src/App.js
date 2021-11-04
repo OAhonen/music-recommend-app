@@ -1,23 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import Search from './Search';
+import { Credentials } from './Credentials';
 
 function App() {
+  const spotify = Credentials();
+  const [accessToken, setAccessToken] = useState('');
+  let authOptions = {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Basic ' + (Buffer.from(spotify.ClientId + ':' + spotify.ClientSecret).toString('base64')),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'grant_type=client_credentials'
+  };
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const response = await fetch('https://accounts.spotify.com/api/token', authOptions)
+        const json = await response.json()
+        console.log(json);
+        setAccessToken(json.access_token);
+      } catch (error) {
+          console.log('error', error)
+      }
+    }
+
+    fetchToken();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Search accessToken={accessToken}></Search>
     </div>
   );
 }
