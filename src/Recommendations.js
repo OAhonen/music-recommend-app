@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 function Recommendations(props) {
   let accessToken = props.accessToken;
   let searchInfo = props.searchInfo;
-  let url = searchInfo.uri.slice(15, searchInfo.uri.length)
   const [searchResult, setSearchResult] = useState([])
-  console.log(url);
+  let url = [];
+  let finalUrl = "";
   let authOptions = {
     method: 'GET',
     headers: {
@@ -15,10 +15,21 @@ function Recommendations(props) {
     }
   };
 
+  searchInfo.forEach(e => {
+    url.push(e.uri.slice(15, e.uri.length))
+  });
+
+  for (let i = 0; i < url.length; i++) {
+    finalUrl = finalUrl + url[i];
+    if (i !== url.length-1) {
+      finalUrl = finalUrl + ",";
+    }
+  }
+
   useEffect(() => {
     const getRecommendations= async () => {
       try {
-        const response = await fetch(`https://api.spotify.com/v1/recommendations?limit=5&seed_artists=${url}`, authOptions)
+        const response = await fetch(`https://api.spotify.com/v1/recommendations?limit=5&seed_artists=${finalUrl}`, authOptions)
         const json = await response.json()
         console.log(json.tracks);
         setSearchResult(json.tracks);

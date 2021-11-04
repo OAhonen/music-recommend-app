@@ -6,7 +6,7 @@ function Search(props) {
   let accessToken = props.accessToken;
   const [searchText, setSearchText] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const [selectedArtist, setSelectedArtist] = useState({});
+  const [selectedArtist, setSelectedArtist] = useState([]);
   const [artistChosen, setArtistChosen] = useState(false);
   const [recommendationsClicked, setRecommendationsClicked] = useState(false);
   let search = "";
@@ -41,7 +41,7 @@ function Search(props) {
 
   const artistClicked = (event) => {
     event.preventDefault();
-    setSelectedArtist(searchResult[event.target.id]);
+    setSelectedArtist(prevArray => [...prevArray, searchResult[event.target.id]]);
     console.log(selectedArtist)
     setArtistChosen(true);
     setSearchResult([]);
@@ -82,7 +82,7 @@ function Search(props) {
         <input type="submit" value="Submit" onClick={searchClicked}/>
       </form>
       {searchResult.length !== 0 && answerChoices}<br/>
-      Artists selected: {selectedArtist.name}<br/>
+      Artists selected: {selectedArtist[0] !== undefined && selectedArtist.map((artist) => artist.name + " ")}<br/>
       {artistChosen === true && search}
     </div>
   )
