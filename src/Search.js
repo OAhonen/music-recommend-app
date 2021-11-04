@@ -44,6 +44,7 @@ function Search(props) {
     setSelectedArtist(searchResult[event.target.id]);
     console.log(selectedArtist)
     setArtistChosen(true);
+    setSearchResult([]);
   }
 
   const getRecommendations = (event) => {
@@ -72,7 +73,7 @@ function Search(props) {
   }
 
   return (
-    <div>{accessToken}
+    <div>
       <form>
         <label>
           Search artist:
@@ -80,7 +81,8 @@ function Search(props) {
         </label>
         <input type="submit" value="Submit" onClick={searchClicked}/>
       </form>
-      {searchResult.length !== 0 && answerChoices}
+      {searchResult.length !== 0 && answerChoices}<br/>
+      Artists selected: {selectedArtist.name}<br/>
       {artistChosen === true && search}
     </div>
   )
