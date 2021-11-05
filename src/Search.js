@@ -28,8 +28,6 @@ function Search(props) {
       'Accept': 'application/json'
     }
   };
-  console.log('search');
-  console.log(accessToken)
 
   const handleSearchArtistText = (event) => {
     setSearchArtistText(event.target.value);
@@ -101,6 +99,20 @@ function Search(props) {
     console.log('???')
     event.preventDefault();
     setRecommendationsClicked(true);
+  }
+
+  const removeArtist = (event) => {
+    event.preventDefault();
+    let tempArray = [...selectedArtist];
+    tempArray.splice(event.target.id, 1);
+    setSelectedArtist(tempArray);
+  }
+
+  const removeTrack = (event) => {
+    event.preventDefault();
+    let tempArray = [...selectedTrack];
+    tempArray.splice(event.target.id, 1);
+    setSelectedTrack(tempArray);
   }
 
   if (recommendationsClicked) {
@@ -183,7 +195,10 @@ function Search(props) {
       Artists selected
       <ul className="wholeChosenList">
       {selectedArtist.map((artist) => 
-        <li className="chosenList" key={artist.href}>
+        <li className="chosenList" 
+            id={selectedArtist.indexOf(artist)} 
+            key={selectedArtist.indexOf(artist)} 
+            onClick={removeArtist}>
           {artist.name + " "}
         </li>)}
       </ul><br/>
@@ -194,7 +209,10 @@ function Search(props) {
       Tracks selected
       <ul className="wholeChosenList">
       {selectedTrack.map((track) => 
-        <li className="chosenList" key={track.href}>
+        <li className="chosenList"
+            id={selectedTrack.indexOf(track)}
+            key={selectedTrack.indexOf(track)}
+            onClick={removeTrack}>
           {track.artists[0].name + " - " + track.name + " "}
         </li>)}
       </ul><br/>
