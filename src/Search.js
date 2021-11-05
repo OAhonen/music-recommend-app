@@ -2,6 +2,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { useState } from "react";
 import Recommendations from "./Recommendations";
 import './css/search.css'
+import Header from "./Header";
 
 function Search(props) {
   let accessToken = props.accessToken;
@@ -125,7 +126,7 @@ function Search(props) {
             onClick={artistClicked}>{result.name}
           </li>
         )}
-      </ul>
+      </ul><br/>
     </div>
   }
 
@@ -139,12 +140,13 @@ function Search(props) {
             onClick={trackClicked}>{result.artists[0].name} - {result.name}
           </li>
         )}
-      </ul>
+      </ul><br/>
     </div>
   }
 
   return (
     <div className="formArea">
+      <Header></Header>
       <form className="askArtist">
         <label>
           Artist:&nbsp;
@@ -168,10 +170,10 @@ function Search(props) {
             onChange={handleSearchTrackText}/>
         </label>&nbsp;
         <input className="submit" type="submit" value="Search" onClick={searchTrackClicked}/><br/>
-      </form>
+      </form><br/>
       {loading && <CircularProgress/>}
-      {searchArtistResult.length !== 0 && <p>{artistAnswerChoices}</p>}
-      {searchTrackResult.length !== 0 && <p>{trackAnswerChoices}</p>}
+      {searchArtistResult.length !== 0 && artistAnswerChoices}
+      {searchTrackResult.length !== 0 && trackAnswerChoices}
 
       {selectedArtist[0] !== undefined &&
       <div className="artistsSelectedText">
@@ -181,7 +183,7 @@ function Search(props) {
         <li className="chosenList" key={artist.href}>
           {artist.name + " "}
         </li>)}
-      </ul>
+      </ul><br/>
       </div>}
 
       {selectedTrack[0] !== undefined &&
@@ -192,7 +194,7 @@ function Search(props) {
         <li className="chosenList" key={track.href}>
           {track.artists[0].name + " - " + track.name + " "}
         </li>)}
-      </ul>
+      </ul><br/>
       </div>}
 
       {itemChosen && search}
