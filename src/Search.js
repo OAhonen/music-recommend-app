@@ -156,7 +156,7 @@ function Search(props) {
       Artists selected: {selectedArtist[0] !== undefined && selectedArtist.map((artist) => artist.name + " ")}<br/>
       Track selected: {selectedTrack[0] !== undefined && selectedTrack.map((track) => track.name + " ")}<br/>
       {itemChosen === true && search}
-      {faultSearch && !false && badSearch}
+      {faultSearch && !loading && badSearch}
     </div>
   )
 }
