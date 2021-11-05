@@ -77,6 +77,13 @@ ul > li:hover {
   border-radius: 4px;
 }
 
+li::before {
+  content: "+";
+  color: greenyellow;
+  margin-right: 20px;
+  margin-left: 2px;
+}
+
 .wholeChosenList {
   width: 100%;
   margin: auto;
@@ -94,6 +101,13 @@ ul > li:hover {
 .wholeChosenList > li:hover {
   background-color: gray;
   cursor: pointer;
+}
+
+.chosenList::before {
+  content: "-";
+  margin-right: 20px;
+  margin-left: 2px;
+  color: red;
 }
 
 .searchButton {
