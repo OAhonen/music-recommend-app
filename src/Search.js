@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useState } from "react";
 import Recommendations from "./Recommendations";
 
@@ -9,6 +9,7 @@ function Search(props) {
   const [selectedArtist, setSelectedArtist] = useState([]);
   const [artistChosen, setArtistChosen] = useState(false);
   const [recommendationsClicked, setRecommendationsClicked] = useState(false);
+  const [loading, isLoading] = useState(false);
   let search = "";
   let answerChoices = "";
   console.log('search');
@@ -19,6 +20,7 @@ function Search(props) {
 
   const searchClicked = async (event) => {
     event.preventDefault();
+    isLoading(true);
 
     let authOptions = {
       method: 'GET',
@@ -33,6 +35,7 @@ function Search(props) {
       const response = await fetch(`https://api.spotify.com/v1/search?q=${searchText}&type=artist&limit=5`, authOptions)
       const json = await response.json()
       setSearchResult(json.artists.items);
+      isLoading(false);
       console.log(json.artists.items);
     } catch (error) {
         console.log('error', error)
@@ -81,7 +84,15 @@ function Search(props) {
         </label>
         <input type="submit" value="Submit" onClick={searchClicked}/>
       </form>
-      {searchResult.length !== 0 && answerChoices}<br/>
+      {loading
+      ?
+      <CircularProgress/>
+      :
+      searchResult.length !== 0
+      ?
+      <p>{answerChoices}</p>
+      :
+      null}<br/>
       Artists selected: {selectedArtist[0] !== undefined && selectedArtist.map((artist) => artist.name + " ")}<br/>
       {artistChosen === true && search}
     </div>

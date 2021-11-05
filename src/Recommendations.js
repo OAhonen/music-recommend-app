@@ -48,7 +48,7 @@ function Recommendations(props) {
     <div>
       {loading
       ?
-      <CircularProgress></CircularProgress>
+      <CircularProgress/>
       :
       searchResult.length !== 0
       ?
