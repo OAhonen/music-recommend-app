@@ -13,9 +13,11 @@ function Search(props) {
   const [itemChosen, setItemChosen] = useState(false);
   const [recommendationsClicked, setRecommendationsClicked] = useState(false);
   const [loading, isLoading] = useState(false);
+  const [faultSearch, setFaultSearch] = useState(false);
   let search = "";
   let artistAnswerChoices = "";
   let trackAnswerChoices = "";
+  let badSearch = <p>Give proper search value.</p>
   let authOptions = {
     method: 'GET',
     headers: {
@@ -37,7 +39,6 @@ function Search(props) {
 
   const searchArtistClicked = async (event) => {
     event.preventDefault();
-    console.log(searchArtistText.length)
     isLoading(true);
 
     try {
@@ -45,9 +46,14 @@ function Search(props) {
       const json = await response.json()
       setSearchArtistResult(json.artists.items);
       isLoading(false);
+      setFaultSearch(false);
       console.log(json.artists.items);
     } catch (error) {
         console.log('error', error)
+        setFaultSearch(true);
+        isLoading(false);
+        setSearchArtistResult([]);
+        setSearchTrackResult([]);
     }
   }
 
@@ -60,9 +66,14 @@ function Search(props) {
       const json = await response.json()
       setSearchTrackResult(json.tracks.items);
       isLoading(false);
+      setFaultSearch(false);
       console.log(json.tracks.items);
     } catch (error) {
         console.log('error', error)
+        setFaultSearch(true);
+        isLoading(false);
+        setSearchArtistResult([]);
+        setSearchTrackResult([]);
     }
   }
 
@@ -120,12 +131,22 @@ function Search(props) {
       <form>
         <label>
           Search artist:
-          <input type="text" name="artist" value={searchArtistText} onChange={handleSearchArtistText}/>
+          <input type="text"
+            name="artist"
+            value={searchArtistText}
+            pattern = "^[A-Za-z0-9]+$"
+            onChange={handleSearchArtistText}/>
         </label>
         <input type="submit" value="Submit" onClick={searchArtistClicked}/><br/>
+      </form>
+      <form>
         <label>
           Search track:
-          <input type="text" name="track" value={searchTrackText} onChange={handleSearchTrackText}/>
+          <input type="text"
+            name="track"
+            value={searchTrackText}
+            pattern = "^[A-Za-z0-9]+$"
+            onChange={handleSearchTrackText}/>
         </label>
         <input type="submit" value="Submit" onClick={searchTrackClicked}/><br/>
       </form>
@@ -135,6 +156,7 @@ function Search(props) {
       Artists selected: {selectedArtist[0] !== undefined && selectedArtist.map((artist) => artist.name + " ")}<br/>
       Track selected: {selectedTrack[0] !== undefined && selectedTrack.map((track) => track.name + " ")}<br/>
       {itemChosen === true && search}
+      {faultSearch && !false && badSearch}
     </div>
   )
 }
