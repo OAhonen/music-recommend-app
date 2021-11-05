@@ -85,6 +85,7 @@ function Search(props) {
     console.log(selectedArtist)
     setItemChosen(true);
     setSearchArtistResult([]);
+    setSearchArtistText("")
   }
 
   const trackClicked = (event) => {
@@ -93,6 +94,7 @@ function Search(props) {
     console.log(selectedTrack);
     setItemChosen(true);
     setSearchTrackResult([]);
+    setSearchTrackText("");
   }
 
   const getRecommendations = (event) => {
