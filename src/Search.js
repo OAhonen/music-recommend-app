@@ -25,6 +25,7 @@ function Search(props) {
     }
   };
   console.log('search');
+  console.log(accessToken)
 
   const handleSearchArtistText = (event) => {
     setSearchArtistText(event.target.value);
