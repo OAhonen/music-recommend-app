@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 
 function Recommendations(props) {
@@ -69,6 +69,7 @@ function Recommendations(props) {
 
   return (
     <div>
+      <Button onClick={() => window.location.reload()}>Back to search</Button>
       {loading
       ?
       <CircularProgress/>

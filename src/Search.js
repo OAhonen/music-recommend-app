@@ -153,8 +153,15 @@ function Search(props) {
       {loading && <CircularProgress/>}
       {searchArtistResult.length !== 0 && <p>{artistAnswerChoices}</p>}
       {searchTrackResult.length !== 0 && <p>{trackAnswerChoices}</p>}
-      Artists selected: {selectedArtist[0] !== undefined && selectedArtist.map((artist) => artist.name + " ")}<br/>
-      Track selected: {selectedTrack[0] !== undefined && selectedTrack.map((track) => track.name + " ")}<br/>
+
+      Artists selected:&nbsp;
+      {selectedArtist[0] !== undefined &&
+      selectedArtist.map((artist) => artist.name + " ")}<br/>
+
+      Track selected:&nbsp;
+      {selectedTrack[0] !== undefined &&
+      selectedTrack.map((track) => track.artists[0].name + " - " + track.name + " ")}<br/>
+
       {itemChosen === true && search}
       {faultSearch && !loading && badSearch}
     </div>
