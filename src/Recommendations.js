@@ -1,9 +1,11 @@
+import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 
 function Recommendations(props) {
   let accessToken = props.accessToken;
   let searchInfo = props.searchInfo;
-  const [searchResult, setSearchResult] = useState([])
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, isLoading] = useState(true);
   let url = [];
   let finalUrl = "";
   let authOptions = {
@@ -33,6 +35,7 @@ function Recommendations(props) {
         const json = await response.json()
         console.log(json.tracks);
         setSearchResult(json.tracks);
+        isLoading(false);
       } catch (error) {
           console.log('error', error)
       }
@@ -43,8 +46,16 @@ function Recommendations(props) {
 
   return (
     <div>
-      {searchResult.map((track) =>
-      <p key={track.name}>{track.artists[0].name} - {track.name}</p>)}
+      {loading
+      ?
+      <CircularProgress></CircularProgress>
+      :
+      searchResult.length !== 0
+      ?
+      searchResult.map((track) =>
+      <p key={track.name}>{track.artists[0].name} - {track.name}</p>)
+      :
+      <p>Recommendations not found.</p>}
     </div>
   )
 }
