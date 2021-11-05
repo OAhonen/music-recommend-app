@@ -1,0 +1,78 @@
+body {
+  background-color: lightblue;
+}
+
+.formArea {
+  background-color: darkgreen;
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.askArtist {
+  margin: auto;
+  width: 50%;
+}
+
+.askTrack {
+  margin: auto;
+  width: 50%;
+}
+
+.artistChoices {
+  margin: auto;
+  width: 50%;
+}
+
+.trackChoices {
+  margin: auto;
+  width: 50%;
+}
+
+.artistsSelectedText {
+  margin: auto;
+  width: 50%;
+}
+
+.tracksSelectedText {
+  margin: auto;
+  width: 50%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background-color: aquamarine;
+}
+
+ul li:nth-child(odd) {
+  background-color: red;
+}
+
+ul > li:hover {
+  background-color: gold;
+}
+
+.wholeChosenList {
+  width: 50%;
+  margin: auto;
+  padding: 0;
+  list-style-type: none;
+  background-color: blue;
+}
+
+.wholeChosenList li:nth-child(odd) {
+  background-color: greenyellow;
+}
+
+.wholeChosenList > li:hover {
+  background-color: gray;
+}
+
+.searchButton {
+  margin: auto;
+  width: 50%;
+}

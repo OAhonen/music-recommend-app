@@ -1,6 +1,7 @@
 import { Button, CircularProgress } from "@mui/material";
 import { useState } from "react";
 import Recommendations from "./Recommendations";
+import './css/search.css'
 
 function Search(props) {
   let accessToken = props.accessToken;
@@ -107,28 +108,44 @@ function Search(props) {
 
   if (itemChosen) {
     console.log('hello')
-    search = <Button variant="contained" key="recom" onClick={getRecommendations}>Get recommendations</Button>
+    search = <div className="searchButton"><br/>
+              <Button variant="contained" size="large" key="recom" onClick={getRecommendations}>
+                Get recommendations
+              </Button>
+              </div>
   }
 
   if (searchArtistResult.length !== 0) {
-    artistAnswerChoices = searchArtistResult.map((result) => 
-      <Button variant="contained" key={result.href} id={searchArtistResult.indexOf(result)}
-        onClick={artistClicked}>{result.name}
-      </Button>
-    )
+    artistAnswerChoices = 
+    <div className="artistChoices">
+      Select artist<br/>
+      <ul>
+        {searchArtistResult.map((result) => 
+          <li key={result.href} id={searchArtistResult.indexOf(result)}
+            onClick={artistClicked}>{result.name}
+          </li>
+        )}
+      </ul>
+    </div>
   }
 
   if (searchTrackResult.length !== 0) {
-    trackAnswerChoices = searchTrackResult.map((result) =>
-    <Button variant="contained" key={result.href} id={searchTrackResult.indexOf(result)}
-      onClick={trackClicked}>{result.artists[0].name} - {result.name}
-    </Button>
-    )
+    trackAnswerChoices = 
+    <div className="trackChoices">
+      Select track<br/>
+      <ul>
+        {searchTrackResult.map((result) =>
+          <li key={result.href} id={searchTrackResult.indexOf(result)}
+            onClick={trackClicked}>{result.artists[0].name} - {result.name}
+          </li>
+        )}
+      </ul>
+    </div>
   }
 
   return (
-    <div>
-      <form>
+    <div className="formArea">
+      <form className="askArtist">
         <label>
           Search artist:
           <input type="text"
@@ -139,7 +156,7 @@ function Search(props) {
         </label>
         <input type="submit" value="Submit" onClick={searchArtistClicked}/><br/>
       </form>
-      <form>
+      <form className="askTrack">
         <label>
           Search track:
           <input type="text"
@@ -154,15 +171,29 @@ function Search(props) {
       {searchArtistResult.length !== 0 && <p>{artistAnswerChoices}</p>}
       {searchTrackResult.length !== 0 && <p>{trackAnswerChoices}</p>}
 
+      <div className="artistsSelectedText">
       Artists selected:&nbsp;
+      </div>
       {selectedArtist[0] !== undefined &&
-      selectedArtist.map((artist) => artist.name + " ")}<br/>
+      <ul className="wholeChosenList">
+      {selectedArtist.map((artist) => 
+        <li className="chosenList" key={artist.href}>
+          {artist.name + " "}
+        </li>)}
+      </ul>}
 
-      Track selected:&nbsp;
+      <div className="tracksSelectedText">
+      Tracks selected:&nbsp;
+      </div>
       {selectedTrack[0] !== undefined &&
-      selectedTrack.map((track) => track.artists[0].name + " - " + track.name + " ")}<br/>
+      <ul className="wholeChosenList">
+      {selectedTrack.map((track) => 
+        <li className="chosenList" key={track.href}>
+          {track.artists[0].name + " - " + track.name + " "}
+        </li>)}
+      </ul>}
 
-      {itemChosen === true && search}
+      {itemChosen && search}
       {faultSearch && !loading && badSearch}
     </div>
   )
