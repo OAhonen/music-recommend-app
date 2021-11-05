@@ -173,27 +173,27 @@ function Search(props) {
       {searchArtistResult.length !== 0 && <p>{artistAnswerChoices}</p>}
       {searchTrackResult.length !== 0 && <p>{trackAnswerChoices}</p>}
 
-      <div className="artistsSelectedText">
-      Artists selected:&nbsp;
-      </div>
       {selectedArtist[0] !== undefined &&
+      <div className="artistsSelectedText">
+      Artists selected
       <ul className="wholeChosenList">
       {selectedArtist.map((artist) => 
         <li className="chosenList" key={artist.href}>
           {artist.name + " "}
         </li>)}
-      </ul>}
+      </ul>
+      </div>}
 
-      <div className="tracksSelectedText">
-      Tracks selected:&nbsp;
-      </div>
       {selectedTrack[0] !== undefined &&
+      <div className="tracksSelectedText">
+      Tracks selected
       <ul className="wholeChosenList">
       {selectedTrack.map((track) => 
         <li className="chosenList" key={track.href}>
           {track.artists[0].name + " - " + track.name + " "}
         </li>)}
-      </ul>}
+      </ul>
+      </div>}
 
       {itemChosen && search}
       {faultSearch && !loading && badSearch}
