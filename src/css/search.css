@@ -56,7 +56,7 @@ body {
 
 ul {
   margin: 0;
-  padding: 0;
+  padding: 2px;
   list-style-type: none;
   background-color: rgb(41, 40, 40);
   border: 3px solid rgb(83, 0, 0);
@@ -65,22 +65,21 @@ ul {
   text-align: start;
 }
 
-/*
 ul li:nth-child(odd) {
   background-color: rgb(44, 44, 44);
 }
-*/
 
 ul > li:hover {
   background-color: black;
   cursor: pointer;
   color: white;
+  border-radius: 4px;
 }
 
 .wholeChosenList {
   width: 100%;
   margin: auto;
-  padding: 0;
+  padding: 2px;
   list-style-type: none;
   background-color: rgb(41, 40, 40);
 }

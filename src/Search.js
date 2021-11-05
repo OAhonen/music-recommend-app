@@ -19,7 +19,7 @@ function Search(props) {
   let search = "";
   let artistAnswerChoices = "";
   let trackAnswerChoices = "";
-  let badSearch = <p>Give proper search value.</p>
+  let badSearch = <div className="askArtist">Give proper search value.<br/><br/></div>
   let authOptions = {
     method: 'GET',
     headers: {
@@ -174,6 +174,7 @@ function Search(props) {
         <input className="submit" type="submit" value="Search" onClick={searchTrackClicked}/><br/>
       </form><br/>
       {loading && <CircularProgress/>}
+      {faultSearch && !loading && badSearch}
       {searchArtistResult.length !== 0 && artistAnswerChoices}
       {searchTrackResult.length !== 0 && trackAnswerChoices}
 
@@ -200,7 +201,6 @@ function Search(props) {
       </div>}
 
       {itemChosen && search}
-      {faultSearch && !loading && badSearch}
     </div>
   )
 }
