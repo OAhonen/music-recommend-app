@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 
 function Recommendations(props) {
   let accessToken = props.accessToken;
-  let searchInfo = props.searchInfo;
+  let artistInfo = props.artistInfo;
+  let trackInfo = props.trackInfo;
   const [searchResult, setSearchResult] = useState([]);
   const [loading, isLoading] = useState(true);
-  let url = [];
-  let finalUrl = "";
+  let artistFinalUrl = "";
+  let trackFinalUrl = "";
+  let finalUrl = "https://api.spotify.com/v1/recommendations?limit=5&";
   let authOptions = {
     method: 'GET',
     headers: {
@@ -17,21 +19,42 @@ function Recommendations(props) {
     }
   };
 
-  searchInfo.forEach(e => {
-    url.push(e.uri.slice(15, e.uri.length))
-  });
+  if (artistInfo.length !== 0) {
+    let artistUrl = [];
+    artistInfo.forEach(e => {
+      artistUrl.push(e.uri.slice(15, e.uri.length))
+    });
 
-  for (let i = 0; i < url.length; i++) {
-    finalUrl = finalUrl + url[i];
-    if (i !== url.length-1) {
-      finalUrl = finalUrl + ",";
+    for (let i = 0; i < artistUrl.length; i++) {
+      artistFinalUrl = artistFinalUrl + artistUrl[i];
+      if (i !== artistUrl.length-1) {
+        artistFinalUrl = artistFinalUrl + ",";
+      }
     }
+    artistFinalUrl = `seed_artists=${artistFinalUrl}`;
+    finalUrl = `${finalUrl}&${artistFinalUrl}`;
+  }
+
+  if (trackInfo.length !== 0) {
+    let trackUrl = [];
+    trackInfo.forEach(e => {
+      trackUrl.push(e.uri.slice(14, e.uri.length))
+    });
+
+    for (let i = 0; i < trackUrl.length; i++) {
+      trackFinalUrl = trackFinalUrl + trackUrl[i];
+      if (i !== trackUrl.length-1) {
+        trackFinalUrl = trackFinalUrl + ",";
+      }
+    }
+    trackFinalUrl = `seed_tracks=${trackFinalUrl}`;
+    finalUrl = `${finalUrl}&${trackFinalUrl}`;
   }
 
   useEffect(() => {
     const getRecommendations= async () => {
       try {
-        const response = await fetch(`https://api.spotify.com/v1/recommendations?limit=5&seed_artists=${finalUrl}`, authOptions)
+        const response = await fetch(finalUrl, authOptions)
         const json = await response.json()
         console.log(json.tracks);
         setSearchResult(json.tracks);

@@ -89,7 +89,7 @@ function Search(props) {
 
   if (recommendationsClicked) {
     return (
-      <Recommendations searchInfo={selectedArtist} accessToken={accessToken}></Recommendations>
+      <Recommendations artistInfo={selectedArtist} trackInfo={selectedTrack} accessToken={accessToken}></Recommendations>
     )
   }
 
@@ -128,19 +128,9 @@ function Search(props) {
         </label>
         <input type="submit" value="Submit" onClick={searchTrackClicked}/><br/>
       </form>
-      {loading
-      ?
-      <CircularProgress/>
-      :
-      searchArtistResult.length !== 0
-      ?
-      <p>{artistAnswerChoices}</p>
-      :
-      searchTrackResult.length !== 0
-      ?
-      <p>{trackAnswerChoices}</p>
-      :
-      null}<br/>
+      {loading && <CircularProgress/>}
+      {searchArtistResult.length !== 0 && <p>{artistAnswerChoices}</p>}
+      {searchTrackResult.length !== 0 && <p>{trackAnswerChoices}</p>}
       Artists selected: {selectedArtist[0] !== undefined && selectedArtist.map((artist) => artist.name + " ")}<br/>
       Track selected: {selectedTrack[0] !== undefined && selectedTrack.map((track) => track.name + " ")}<br/>
       {itemChosen === true && search}
