@@ -4,37 +4,45 @@ import Recommendations from "./Recommendations";
 
 function Search(props) {
   let accessToken = props.accessToken;
-  const [searchText, setSearchText] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchArtistText, setSearchArtistText] = useState("");
+  const [searchArtistResult, setSearchArtistResult] = useState([]);
   const [selectedArtist, setSelectedArtist] = useState([]);
-  const [artistChosen, setArtistChosen] = useState(false);
+  const [searchTrackText, setSearchTrackText] = useState("");
+  const [searchTrackResult, setSearchTrackResult] = useState([]);
+  const [selectedTrack, setSelectedTrack] = useState([]);
+  const [itemChosen, setItemChosen] = useState(false);
   const [recommendationsClicked, setRecommendationsClicked] = useState(false);
   const [loading, isLoading] = useState(false);
   let search = "";
-  let answerChoices = "";
+  let artistAnswerChoices = "";
+  let trackAnswerChoices = "";
+  let authOptions = {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  };
   console.log('search');
 
-  const handleSearchText = (event) => {
-    setSearchText(event.target.value)
+  const handleSearchArtistText = (event) => {
+    setSearchArtistText(event.target.value);
   }
 
-  const searchClicked = async (event) => {
+  const handleSearchTrackText = (event) => {
+    setSearchTrackText(event.target.value);
+  }
+
+  const searchArtistClicked = async (event) => {
     event.preventDefault();
+    console.log(searchArtistText.length)
     isLoading(true);
 
-    let authOptions = {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + accessToken,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    };
-
     try {
-      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchText}&type=artist&limit=5`, authOptions)
+      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchArtistText}&type=artist&limit=5`, authOptions)
       const json = await response.json()
-      setSearchResult(json.artists.items);
+      setSearchArtistResult(json.artists.items);
       isLoading(false);
       console.log(json.artists.items);
     } catch (error) {
@@ -42,12 +50,35 @@ function Search(props) {
     }
   }
 
+  const searchTrackClicked = async (event) => {
+    event.preventDefault();
+    isLoading(true);
+
+    try {
+      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchTrackText}&type=track&limit=5`, authOptions)
+      const json = await response.json()
+      setSearchTrackResult(json.tracks.items);
+      isLoading(false);
+      console.log(json.tracks.items);
+    } catch (error) {
+        console.log('error', error)
+    }
+  }
+
   const artistClicked = (event) => {
     event.preventDefault();
-    setSelectedArtist(prevArray => [...prevArray, searchResult[event.target.id]]);
+    setSelectedArtist(prevArray => [...prevArray, searchArtistResult[event.target.id]]);
     console.log(selectedArtist)
-    setArtistChosen(true);
-    setSearchResult([]);
+    setItemChosen(true);
+    setSearchArtistResult([]);
+  }
+
+  const trackClicked = (event) => {
+    event.preventDefault();
+    setSelectedTrack(prevArray => [...prevArray, searchTrackResult[event.target.id]]);
+    console.log(selectedTrack);
+    setItemChosen(true);
+    setSearchTrackResult([]);
   }
 
   const getRecommendations = (event) => {
@@ -62,16 +93,24 @@ function Search(props) {
     )
   }
 
-  if (artistChosen) {
+  if (itemChosen) {
     console.log('hello')
     search = <Button variant="contained" key="recom" onClick={getRecommendations}>Get recommendations</Button>
   }
 
-  if (searchResult.length !== 0) {
-    answerChoices = searchResult.map((result) => 
-      <Button variant="contained" key={result.href} id={searchResult.indexOf(result)}
+  if (searchArtistResult.length !== 0) {
+    artistAnswerChoices = searchArtistResult.map((result) => 
+      <Button variant="contained" key={result.href} id={searchArtistResult.indexOf(result)}
         onClick={artistClicked}>{result.name}
       </Button>
+    )
+  }
+
+  if (searchTrackResult.length !== 0) {
+    trackAnswerChoices = searchTrackResult.map((result) =>
+    <Button variant="contained" key={result.href} id={searchTrackResult.indexOf(result)}
+      onClick={trackClicked}>{result.artists[0].name} - {result.name}
+    </Button>
     )
   }
 
@@ -80,21 +119,31 @@ function Search(props) {
       <form>
         <label>
           Search artist:
-          <input type="text" name="name" value={searchText} onChange={handleSearchText}/>
+          <input type="text" name="artist" value={searchArtistText} onChange={handleSearchArtistText}/>
         </label>
-        <input type="submit" value="Submit" onClick={searchClicked}/>
+        <input type="submit" value="Submit" onClick={searchArtistClicked}/><br/>
+        <label>
+          Search track:
+          <input type="text" name="track" value={searchTrackText} onChange={handleSearchTrackText}/>
+        </label>
+        <input type="submit" value="Submit" onClick={searchTrackClicked}/><br/>
       </form>
       {loading
       ?
       <CircularProgress/>
       :
-      searchResult.length !== 0
+      searchArtistResult.length !== 0
       ?
-      <p>{answerChoices}</p>
+      <p>{artistAnswerChoices}</p>
+      :
+      searchTrackResult.length !== 0
+      ?
+      <p>{trackAnswerChoices}</p>
       :
       null}<br/>
       Artists selected: {selectedArtist[0] !== undefined && selectedArtist.map((artist) => artist.name + " ")}<br/>
-      {artistChosen === true && search}
+      Track selected: {selectedTrack[0] !== undefined && selectedTrack.map((track) => track.name + " ")}<br/>
+      {itemChosen === true && search}
     </div>
   )
 }
