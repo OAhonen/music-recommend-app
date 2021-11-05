@@ -147,25 +147,27 @@ function Search(props) {
     <div className="formArea">
       <form className="askArtist">
         <label>
-          Search artist:
+          Artist:&nbsp;
           <input type="text"
+            className="input"
             name="artist"
             value={searchArtistText}
             pattern = "^[A-Za-z0-9]+$"
             onChange={handleSearchArtistText}/>
-        </label>
-        <input type="submit" value="Submit" onClick={searchArtistClicked}/><br/>
+        </label>&nbsp;
+        <input className="submit" type="submit" value="Search" onClick={searchArtistClicked}/><br/>
       </form>
       <form className="askTrack">
         <label>
-          Search track:
+          Track:&nbsp;
           <input type="text"
+            className="input"
             name="track"
             value={searchTrackText}
             pattern = "^[A-Za-z0-9]+$"
             onChange={handleSearchTrackText}/>
-        </label>
-        <input type="submit" value="Submit" onClick={searchTrackClicked}/><br/>
+        </label>&nbsp;
+        <input className="submit" type="submit" value="Search" onClick={searchTrackClicked}/><br/>
       </form>
       {loading && <CircularProgress/>}
       {searchArtistResult.length !== 0 && <p>{artistAnswerChoices}</p>}

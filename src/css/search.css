@@ -1,12 +1,15 @@
 body {
-  background-color: lightblue;
+  background-color: rgb(41, 40, 40);
+  color: white;
+  font-size: large;
 }
 
 .formArea {
-  background-color: darkgreen;
+  background-color: black;
   margin: auto;
   width: 50%;
-  border: 3px solid green;
+  border: 3px solid rgb(27, 26, 26);
+  border-radius: 12px;
   padding: 20px;
   margin-top: 20px;
 }
@@ -22,38 +25,52 @@ body {
 }
 
 .artistChoices {
+  text-align: center;
   margin: auto;
   width: 50%;
+  color: white;
 }
 
 .trackChoices {
+  text-align: center;
   margin: auto;
   width: 50%;
+  color: white
 }
 
 .artistsSelectedText {
   margin: auto;
   width: 50%;
+  text-align: center;
 }
 
 .tracksSelectedText {
   margin: auto;
   width: 50%;
+  text-align: center;
 }
 
 ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  background-color: aquamarine;
+  background-color: rgb(41, 40, 40);
+  border: 3px solid rgb(83, 0, 0);
+  border-radius: 12px;
+  color: rgb(190, 190, 190);
+  text-align: start;
 }
 
+/*
 ul li:nth-child(odd) {
-  background-color: red;
+  background-color: rgb(44, 44, 44);
 }
+*/
 
 ul > li:hover {
-  background-color: gold;
+  background-color: black;
+  cursor: pointer;
+  color: white;
 }
 
 .wholeChosenList {
@@ -61,18 +78,40 @@ ul > li:hover {
   margin: auto;
   padding: 0;
   list-style-type: none;
-  background-color: blue;
+  background-color: rgb(41, 40, 40);
 }
 
+/*
 .wholeChosenList li:nth-child(odd) {
-  background-color: greenyellow;
+  background-color: rgb(37, 37, 37);
 }
+*/
 
 .wholeChosenList > li:hover {
   background-color: gray;
+  cursor: default;
 }
 
 .searchButton {
   margin: auto;
   width: 50%;
+  text-align: center;
+}
+
+.input {
+  border: 1px solid rgb(27, 26, 26);
+  border-radius: 8px;
+  width: 50%;
+}
+
+.submit {
+  border: 1px solid rgb(27, 26, 26);
+  border-radius: 6px;
+  background-color: rgb(50, 10, 233);
+  text-align: center;
+}
+
+.submit:hover {
+  cursor: pointer;
+  background-color: rgb(29, 9, 119);
 }
