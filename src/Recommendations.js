@@ -1,5 +1,6 @@
 import { Button, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
+import './css/recommendations.css'
 
 function Recommendations(props) {
   let accessToken = props.accessToken;
@@ -68,7 +69,7 @@ function Recommendations(props) {
   }, [])
 
   return (
-    <div>
+    <div className="resultArea">
       <Button onClick={() => window.location.reload()}>Back to search</Button>
       {loading
       ?
@@ -76,8 +77,19 @@ function Recommendations(props) {
       :
       searchResult.length !== 0
       ?
-      searchResult.map((track) =>
-      <p key={track.name}>{track.artists[0].name} - {track.name}</p>)
+      <table>
+        <tbody>
+        <tr>
+          <th>Artist</th>
+          <th>Track</th>
+        </tr>
+      {searchResult.map((track) =>
+      <tr key={track.id}>
+      <td key={track.artists[0].name}>{track.artists[0].name}</td>
+      <td key={track.name}>{track.name}</td>
+      </tr>)}
+      </tbody>
+      </table>
       :
       <p>Recommendations not found.</p>}
     </div>

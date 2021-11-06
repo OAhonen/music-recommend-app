@@ -1,0 +1,40 @@
+body {
+  background-color: rgb(41, 40, 40);
+  color: white;
+  font-size: large;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.resultArea {
+  background-color: black;
+  margin: auto;
+  width: 50%;
+  border: 3px solid rgb(27, 26, 26);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr {
+
+}
+
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(2, 85, 15);
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
