@@ -106,6 +106,9 @@ function Search(props) {
     let tempArray = [...selectedArtist];
     tempArray.splice(event.target.id, 1);
     setSelectedArtist(tempArray);
+    if (tempArray.length === 0 && selectedTrack.length === 0) {
+      setItemChosen(false);
+    }
   }
 
   const removeTrack = (event) => {
@@ -113,6 +116,9 @@ function Search(props) {
     let tempArray = [...selectedTrack];
     tempArray.splice(event.target.id, 1);
     setSelectedTrack(tempArray);
+    if (tempArray.length === 0 && selectedArtist.length === 0) {
+      setItemChosen(false);
+    }
   }
 
   if (recommendationsClicked) {
@@ -128,6 +134,8 @@ function Search(props) {
                 Get recommendations
               </Button>
               </div>
+  } else if (!itemChosen) {
+    search = <div></div>
   }
 
   if (searchArtistResult.length !== 0) {
