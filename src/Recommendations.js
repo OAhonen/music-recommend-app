@@ -10,7 +10,7 @@ function Recommendations(props) {
   const [loading, isLoading] = useState(true);
   let artistFinalUrl = "";
   let trackFinalUrl = "";
-  let finalUrl = "https://api.spotify.com/v1/recommendations?limit=5&";
+  let finalUrl = "https://api.spotify.com/v1/recommendations?limit=20&";
   let authOptions = {
     method: 'GET',
     headers: {
@@ -82,12 +82,22 @@ function Recommendations(props) {
         <tr>
           <th>Artist</th>
           <th>Track</th>
+          <th>Preview (if available)</th>
         </tr>
       {searchResult.map((track) =>
-      <tr key={track.id}>
-      <td key={track.artists[0].name}>{track.artists[0].name}</td>
-      <td key={track.name}>{track.name}</td>
-      </tr>)}
+        <tr key={track.id}>
+          <td key={track.artists[0].name}>{track.artists[0].name}</td>
+          <td key={track.name}>{track.name}</td>
+          <td key={track.popularity}>
+            {track.preview_url !== null
+            ?
+              <video controls name="media" height="40" width="300">
+                <source src={track.preview_url} type="audio/mpeg"/>
+              </video>
+            :
+                null}
+          </td>
+        </tr>)}
       </tbody>
       </table>
       :
