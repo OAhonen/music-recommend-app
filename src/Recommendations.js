@@ -91,7 +91,7 @@ function Recommendations(props) {
           <td key={track.popularity}>
             {track.preview_url !== null
             ?
-              <video controls name="media" height="40" width="300">
+              <video controls name="media" height="25" width="300">
                 <source src={track.preview_url} type="audio/mpeg"/>
               </video>
             :

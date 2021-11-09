@@ -37,12 +37,15 @@ function Search(props) {
     setSearchTrackText(event.target.value);
   }
 
+  /**
+   * Called when user clicks search-button for artists.
+   * @param {} event 
+   */
   const searchArtistClicked = async (event) => {
     event.preventDefault();
     isLoading(true);
-
     try {
-      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchArtistText}&type=artist&limit=5`, authOptions)
+      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchArtistText}&type=artist&limit=10`, authOptions)
       const json = await response.json()
       setSearchArtistResult(json.artists.items);
       isLoading(false);
@@ -57,12 +60,15 @@ function Search(props) {
     }
   }
 
+  /**
+   * Called when user clicks search-button for tracks.
+   * @param {} event 
+   */
   const searchTrackClicked = async (event) => {
     event.preventDefault();
     isLoading(true);
-
     try {
-      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchTrackText}&type=track&limit=5`, authOptions)
+      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchTrackText}&type=track&limit=10`, authOptions)
       const json = await response.json()
       setSearchTrackResult(json.tracks.items);
       isLoading(false);
@@ -77,6 +83,10 @@ function Search(props) {
     }
   }
 
+  /**
+   * User clicks artist from the list.
+   * @param {} event 
+   */
   const artistClicked = (event) => {
     event.preventDefault();
     setSelectedArtist(prevArray => [...prevArray, searchArtistResult[event.target.id]]);
@@ -86,6 +96,10 @@ function Search(props) {
     setSearchArtistText("")
   }
 
+  /**
+   * User clicks track from the list.
+   * @param {} event 
+   */
   const trackClicked = (event) => {
     event.preventDefault();
     setSelectedTrack(prevArray => [...prevArray, searchTrackResult[event.target.id]]);
@@ -95,12 +109,19 @@ function Search(props) {
     setSearchTrackText("");
   }
 
+  /**
+   * User clicks get recommendations -button.
+   * @param {*} event 
+   */
   const getRecommendations = (event) => {
-    console.log('???')
     event.preventDefault();
     setRecommendationsClicked(true);
   }
 
+  /**
+   * Remove artist.
+   * @param {} event 
+   */
   const removeArtist = (event) => {
     event.preventDefault();
     let tempArray = [...selectedArtist];
@@ -111,6 +132,10 @@ function Search(props) {
     }
   }
 
+  /**
+   * Remove track.
+   * @param {} event 
+   */
   const removeTrack = (event) => {
     event.preventDefault();
     let tempArray = [...selectedTrack];
@@ -127,8 +152,10 @@ function Search(props) {
     )
   }
 
+  /**
+   * If any track/artist is selected, show the recommendations button.
+   */
   if (itemChosen) {
-    console.log('hello')
     search = <div className="searchButton"><br/>
               <Button variant="contained" size="large" key="recom" onClick={getRecommendations}>
                 Get recommendations
@@ -138,6 +165,9 @@ function Search(props) {
     search = <div></div>
   }
 
+  /**
+   * Show the artists found from the fetch.
+   */
   if (searchArtistResult.length !== 0) {
     artistAnswerChoices = 
     <div className="artistChoices">
@@ -152,6 +182,9 @@ function Search(props) {
     </div>
   }
 
+  /**
+   * Show the tracks found from the fetch.
+   */
   if (searchTrackResult.length !== 0) {
     trackAnswerChoices = 
     <div className="trackChoices">
