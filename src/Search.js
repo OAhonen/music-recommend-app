@@ -89,11 +89,16 @@ function Search(props) {
    */
   const artistClicked = (event) => {
     event.preventDefault();
-    setSelectedArtist(prevArray => [...prevArray, searchArtistResult[event.target.id]]);
-    console.log(selectedArtist)
-    setItemChosen(true);
-    setSearchArtistResult([]);
-    setSearchArtistText("")
+    if (selectedArtist.length < 5) {
+      setSelectedArtist(prevArray => [...prevArray, searchArtistResult[event.target.id]]);
+      console.log(selectedArtist)
+      setItemChosen(true);
+      let tempArray = [...searchArtistResult];
+      tempArray.splice(event.target.id, 1);
+      setSearchArtistResult(tempArray);
+    }
+    //setSearchArtistResult([]);
+    //setSearchArtistText("")
   }
 
   /**
@@ -102,11 +107,16 @@ function Search(props) {
    */
   const trackClicked = (event) => {
     event.preventDefault();
-    setSelectedTrack(prevArray => [...prevArray, searchTrackResult[event.target.id]]);
-    console.log(selectedTrack);
-    setItemChosen(true);
-    setSearchTrackResult([]);
-    setSearchTrackText("");
+    if (selectedTrack.length < 5) {
+      setSelectedTrack(prevArray => [...prevArray, searchTrackResult[event.target.id]]);
+      console.log(selectedTrack);
+      setItemChosen(true);
+      let tempArray = [...searchTrackResult];
+      tempArray.splice(event.target.id, 1);
+      setSearchTrackResult(tempArray);
+    }
+    //setSearchTrackResult([]);
+    //setSearchTrackText("");
   }
 
   /**

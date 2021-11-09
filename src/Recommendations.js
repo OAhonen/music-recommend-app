@@ -10,7 +10,7 @@ function Recommendations(props) {
   const [loading, isLoading] = useState(true);
   let artistFinalUrl = "";
   let trackFinalUrl = "";
-  let finalUrl = "https://api.spotify.com/v1/recommendations?limit=20&";
+  let finalUrl = "https://api.spotify.com/v1/recommendations?limit=20";
   let authOptions = {
     method: 'GET',
     headers: {
@@ -56,9 +56,11 @@ function Recommendations(props) {
     const getRecommendations= async () => {
       try {
         const response = await fetch(finalUrl, authOptions)
-        const json = await response.json()
-        console.log(json.tracks);
-        setSearchResult(json.tracks);
+        if (response.ok) {
+          const json = await response.json()
+          console.log(json.tracks);
+          setSearchResult(json.tracks);
+        }
         isLoading(false);
       } catch (error) {
           console.log('error', error)
